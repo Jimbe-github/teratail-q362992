@@ -22,14 +22,9 @@ class MenuThanksFragment : Fragment() {
     val nameText = view.findViewById<TextView>(R.id.menuName)
     val priceText = view.findViewById<TextView>(R.id.menuPrice)
 
-    mvm.getSelectedMenu().observe(viewLifecycleOwner, Observer { menuData: MenuData? ->
-      if (menuData == null) {
-        nameText.text = "--"
-        priceText.text = "--"
-      } else {
-        nameText.text = menuData.name
-        priceText.text = menuData.price.toString() + "円"
-      }
+    mvm.getSelectedMenu().observe(viewLifecycleOwner, { menuData: MenuData? ->
+      nameText.text = menuData?.name ?: "--"
+      priceText.text = menuData?.let{ it.price.toString() + "円" } ?: "--"
     })
   }
 }

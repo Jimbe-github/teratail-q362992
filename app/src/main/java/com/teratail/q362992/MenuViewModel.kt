@@ -9,7 +9,7 @@ import android.widget.ListAdapter
 import android.widget.TextView
 import androidx.lifecycle.*
 
-class MenuData(val name: String, val price: Int)
+data class MenuData(val name: String, val price: Int)
 
 class MenuViewModel : ViewModel() {
   private val selectedMenu = MutableLiveData<MenuData?>(null)
@@ -27,7 +27,7 @@ class MenuViewModel : ViewModel() {
   }
 
   fun createMenuAdapter(owner:LifecycleOwner, context: Context): ListAdapter {
-    var adapter = MenuAdapter(context);
+    val adapter = MenuAdapter(context)
     menuList.observe(owner, adapter)
     return adapter
   }
@@ -37,12 +37,8 @@ class MenuViewModel : ViewModel() {
 class MenuAdapter internal constructor(context: Context) : BaseAdapter(), Observer<List<MenuData>?> {
   private inner class ViewHolder(val text1: TextView, val text2: TextView)
 
-  private val layoutInflater: LayoutInflater
+  private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
   private var menuList: List<MenuData> = emptyList()
-
-  init {
-    layoutInflater = LayoutInflater.from(context)
-  }
 
   override fun getCount(): Int {
     return menuList.size
@@ -57,7 +53,7 @@ class MenuAdapter internal constructor(context: Context) : BaseAdapter(), Observ
   }
 
   override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-    var view = convertView ?: let {
+    val view = convertView ?: let {
       val v:View = layoutInflater.inflate(android.R.layout.simple_list_item_2, parent, false)
       v.tag = ViewHolder(
         v.findViewById(android.R.id.text1),
@@ -74,7 +70,7 @@ class MenuAdapter internal constructor(context: Context) : BaseAdapter(), Observ
   }
 
   override fun onChanged(newMenuList: List<MenuData>?) {
-    menuList = if(newMenuList == null) emptyList() else newMenuList
+    menuList = newMenuList ?: emptyList()
     notifyDataSetChanged()
   }
 }

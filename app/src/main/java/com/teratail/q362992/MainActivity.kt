@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     val singleMode = findViewById<View?>(R.id.fragmentContainer) != null
     if (singleMode) {
-      mvm.getSelectedMenu().observe(this, Observer { value: MenuData? ->
+      mvm.getSelectedMenu().observe(this, { value: MenuData? ->
         val transaction = supportFragmentManager.beginTransaction()
         if (value == null) {
           transaction.replace(R.id.fragmentContainer, MenuListFragment())

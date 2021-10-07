@@ -1,15 +1,12 @@
 package com.teratail.q362992
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
-import android.widget.BaseAdapter
 import android.widget.ListView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 
@@ -27,7 +24,7 @@ class MenuListFragment : Fragment() {
     lvMenu.adapter = mvm.createMenuAdapter(viewLifecycleOwner, requireContext());
 
     // リスナの登録。
-    lvMenu.onItemClickListener = OnItemClickListener { parent: AdapterView<*>, view1: View?, position: Int, id: Long ->
+    lvMenu.onItemClickListener = OnItemClickListener { parent: AdapterView<*>, _: View?, position: Int, _: Long ->
       val item = parent.getItemAtPosition(position) as MenuData
       mvm.setSelectedMenu(item)
     }

@@ -56,18 +56,15 @@ class MenuAdapter internal constructor(context: Context) : BaseAdapter(), Observ
     return position.toLong()
   }
 
-  override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
-    var view = convertView
-    val vh: ViewHolder
-    if (view == null) {
-      view = layoutInflater.inflate(android.R.layout.simple_list_item_2, parent, false)
-      vh = ViewHolder(
-        view.findViewById(android.R.id.text1),
-        view.findViewById(android.R.id.text2))
-      view.tag = vh
-    } else {
-      vh = view.tag as ViewHolder
+  override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+    var view = convertView ?: let {
+      val v:View = layoutInflater.inflate(android.R.layout.simple_list_item_2, parent, false)
+      v.tag = ViewHolder(
+        v.findViewById(android.R.id.text1),
+        v.findViewById(android.R.id.text2))
+      v
     }
+    val vh = view.tag as ViewHolder
 
     val menuData = getItem(position)
     vh.text1.text = menuData.name

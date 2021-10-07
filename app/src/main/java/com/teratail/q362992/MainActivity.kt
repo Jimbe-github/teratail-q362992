@@ -23,17 +23,13 @@ class MainActivity : AppCompatActivity() {
     val singleMode = findViewById<View?>(R.id.fragmentContainer) != null
     if (singleMode) {
       mvm.getSelectedMenu().observe(this, Observer { value: MenuData? ->
+        val transaction = supportFragmentManager.beginTransaction()
         if (value == null) {
-          supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragmentContainer, MenuListFragment())
-            .commit()
+          transaction.replace(R.id.fragmentContainer, MenuListFragment())
         } else {
-          supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, MenuThanksFragment())
-            .addToBackStack(null)
-            .commit()
+          transaction.replace(R.id.fragmentContainer, MenuThanksFragment()).addToBackStack(null)
         }
+        transaction.commit()
       })
     }
   }
